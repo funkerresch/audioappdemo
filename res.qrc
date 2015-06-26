@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/puredata">
+        <file>puredata/stereoout.pd</file>
+    </qresource>
+</RCC>
