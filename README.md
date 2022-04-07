@@ -7,3 +7,4 @@ for libpd.dylib in any other directory than /Users/MYUSERNAME/libs, no matter wh
 Maybe that's is fixed with the update to Qt6.
 
 
+<img width="626" alt="AudioAppScreenshot" src="https://user-images.githubusercontent.com/10684202/162209396-d91505ce-1c8f-4928-8132-664ccf7f005a.png">
