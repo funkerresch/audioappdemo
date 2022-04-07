@@ -15,6 +15,7 @@ CONFIG += static
 CONFIG += c++11
 
 INCLUDEPATH += $$PWD/libpd/libpd_wrapper
+INCLUDEPATH += $$PWD/libpd/libpd_wrapper/util
 INCLUDEPATH += $$PWD/libpd/pure-data/src
 INCLUDEPATH += portaudio/include
 

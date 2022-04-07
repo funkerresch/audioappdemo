@@ -44,8 +44,9 @@
 #include <math.h>
 #include "z_libpd.h"
 #include "m_pd.h"
-#include "util/z_print_util.h"
-#include "util/z_hook_util.h"
+#include "z_print_util.h"
+//#include "z_hook_util.h"
+#include "z_hooks.h"
 #include "portaudio.h"
 #include "pa_mac_core.h"
 #include <QObject>

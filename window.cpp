@@ -40,13 +40,8 @@
 
 #include <QtWidgets>
 #include "window.h"
-// libpd_queued_receive_pd_messages();
 
 Window *Window::globalWindow;
-
-/*
- * Creating controls for Pure Data
- */
 
 void Window::createPureDataControls(const QString &title)
 {
@@ -157,11 +152,8 @@ Window::Window()
     setLayout(layout);
 
     libpd_banghook = (t_libpd_banghook) Window::bangpd;  // binding the function bangpd to receive bangs from our pd patchers
-    libpd_printhook = (t_libpd_printhook) Window::printpd; // binding printpd
-
     libpd_init();
-    libpd_init_audio(0, 2, 44100); // 0 inputs, 2 outputs, we should adjust this (also for portaudio) every time we change the input or output device
-                                   // and load a corresponding output patch, in this example it is statically set to 2 outputs and 0 inputs
+    libpd_init_audio(0, 2, 44100); // 0 inputs, 2 outputs, we should adjust this (also for portaudio) every time we change the input or output device                                   // and load a corresponding output patch, in this example it is statically set to 2 outputs and 0 inputs
 
     QString path = QCoreApplication::applicationDirPath();
     libpd_openfile("puredata/stereoout.pd", path.toLatin1());   // loading an output patcher with 2 outputs

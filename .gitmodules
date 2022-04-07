@@ -1,0 +1,6 @@
+[submodule "libpd"]
+	path = libpd
+	url = git@github.com:libpd/libpd.git
+[submodule "portaudio"]
+	path = portaudio
+	url = git@github.com:PortAudio/portaudio.git
