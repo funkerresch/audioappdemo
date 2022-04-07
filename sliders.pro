@@ -1,20 +1,31 @@
+TEMPLATE = app
 QT += widgets
 
-LIBS += $$_PRO_FILE_PWD_/libpd/libs/libpd-osx.a
-LIBS += $$_PRO_FILE_PWD_/portaudio/lib/.libs/libportaudio.a
-INCLUDEPATH += $$_PRO_FILE_PWD_/libpd/libpd_wrapper
-INCLUDEPATH += $$_PRO_FILE_PWD_/libpd/pure-data/src
-INCLUDEPATH += $$_PRO_FILE_PWD_/portaudio/include
-INCLUDEPATH += .
+extralib.target = extra
+extralib.commands = echo "Precompiling libpd and portaudio.."; \
+                            $$PWD/makeportaudioandlibpd.sh
+extralib.depends =
+
+QMAKE_EXTRA_TARGETS += extralib
+PRE_TARGETDEPS = extra
+
+QMAKE_CC=clang
+QMAKE_CXX=clang++
+CONFIG += static
+CONFIG += c++11
+
+INCLUDEPATH += $$PWD/libpd/libpd_wrapper
+INCLUDEPATH += $$PWD/libpd/pure-data/src
+INCLUDEPATH += portaudio/include
 
 macx
 {
-    QMAKE_MAC_SDK = macosx10.9
     LIBS += -framework AudioToolbox \
             -framework AudioUnit \
             -framework CoreAudio \
             -framework CoreServices \
-            -framework Carbon
+            -framework Accelerate \
+            -framework Carbon \
 }
 
 HEADERS     = \
@@ -27,15 +38,24 @@ SOURCES     = main.cpp \
     pawrapper.cpp \
     audiooutput.cpp \
 
-QMAKE_MAC_SDK = macosx10.9
 
-# install
-target.path = $$_PRO_FILE_PWD_/build
-INSTALLS += target
+installs.files += $$PWD/libpd/libs/libpd.dylib
+installs.files += $$PWD/portaudio/lib/.libs/libportaudio.a
+installs.path = $$OUT_PWD/sliders.app/Contents/MacOS
+INSTALLS += installs
 
-copydata.commands = $(COPY_DIR) $$PWD/puredata $$OUT_PWD/sliders.app/Contents/MacOS
+copydata.commands = $(COPY_FILE) $$PWD/portaudio/lib/.libs/libportaudio.2.dylib /usr/local/lib/ \
+&& $(COPY_FILE) $$PWD/libpd/libs/libpd.dylib /Users/harveykeitel/libs \
+
 first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)
+
 QMAKE_EXTRA_TARGETS += first copydata
+
+target.path = $$PWD/build
+INSTALLS += target
+
+macx: LIBS += -L$$PWD/portaudio/lib/.libs/ -lportaudio
+macx: LIBS += -L$$PWD/libpd/libs/ -lpd
 
